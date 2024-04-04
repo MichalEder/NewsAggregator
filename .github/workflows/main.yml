@@ -1,0 +1,30 @@
+name: Scheduled db update
+
+on:
+  schedule:
+    - cron: '0/30 * * * *'
+
+jobs:
+  run-script:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4  
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
+
+      - name: Install dependencies
+        run:  pip install -r requirements.txt  
+
+      - name: Run the script
+        run: python main.py
+        
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .  # Assuming files are modified
+          git commit -m "Automatic database update"
+          git push 
