@@ -3,7 +3,7 @@ from functions.database_interactions import read_resource_for_web
 
 st.set_page_config(layout="wide")
 
-@st.cache
+
 def load_data():
     zahranicni = read_resource_for_web('zahranicni', 'idnes')
     domaci = read_resource_for_web('domaci', 'idnes')
