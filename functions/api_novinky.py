@@ -2,9 +2,10 @@ import requests
 from functions.database_interactions import add_entry, read_resource
 
 
-def process_novinky_data(url='https://api-web.novinky.cz/v1/timelines'):
+def process_novinky_data():
     """Fetches data from Novinky.cz API, processes it, and adds new entries to the database."""
 
+    url = 'https://api-web.novinky.cz/v1/timelines'
     response = requests.get(url)
     content = response.json()
     original_data = {line[1] for line in read_resource('novinky')}
@@ -34,9 +35,5 @@ def process_novinky_data(url='https://api-web.novinky.cz/v1/timelines'):
                     add_entry(data_local, 'novinky')
 
     except IndexError:
-        pass  # Handle potential errors in data structure
+        pass
 
-
-if __name__ == "__main__":
-    novinky_url = "https://api-web.novinky.cz/v1/timelines"
-    process_novinky_data(novinky_url)
