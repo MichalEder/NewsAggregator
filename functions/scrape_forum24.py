@@ -25,6 +25,7 @@ def process_forum24(sections, headers):
     """
 
     original_data = set([line[5] for line in read_resource('forum24')])
+
     for section_main in sections:
         for page_num in range(1, 4):
             url = f'https://www.forum24.cz/rubrika{section_main}?stranka={page_num}'
@@ -55,13 +56,9 @@ def process_forum24(sections, headers):
                         'Url': article_link,
                         'Date': date
                     }
-
+                    print(data)
                     original_data.add(data['Url'])
                     add_entry(data, 'forum24')
+
                 except AttributeError:
                     continue
-
-
-if __name__ == "__main__":
-    sections = ['/domaci', '/zahranici']
-    process_forum24(sections)
