@@ -11,3 +11,4 @@ This project aggregates news articles from multiple Czech news sources from chos
 ## Features
 * **Selective Scraping:** Targets specific news sections for efficiency and relevance.
 * **Database Storage:** Stores essential article information (title, perex, date, etc.) in an SQLite database for later use or analysis.
+* **GitHub Actions:** The database is automatically updated via a GitHub Actions workflow. This ensures that the news data stays fresh and up-to-date.
