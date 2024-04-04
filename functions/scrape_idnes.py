@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from functions.database_interactions import add_entry, read_resource
 
 
-def process_idnes(sections):
+def process_idnes(sections, headers):
     """Fetches and processes articles from specified sections on idnes.cz.
 
     Args:
@@ -17,7 +17,7 @@ def process_idnes(sections):
     for section_main in sections:
         for page_num in range(1, 3):
             url = f'https://www.idnes.cz/{section_main}/{page_num}'
-            response = requests.get(url)
+            response = requests.get(url, headers=headers)
 
             soup = BeautifulSoup(response.content, "html.parser")
             articles = soup.findAll('a', class_="art-link")
@@ -28,10 +28,10 @@ def process_idnes(sections):
                     article.get('href') not in original_data and
                     determine_section(article.get('href'))
             ]
-            process_articles(article_links, original_data)
+            process_articles(article_links, original_data, headers)
 
 
-def process_articles(article_links, original_data):
+def process_articles(article_links, original_data, headers):
     """Processes a list of article links, extracting data and adding new entries to the database.
 
     Args:
@@ -44,7 +44,7 @@ def process_articles(article_links, original_data):
         if section is None:
             continue
 
-        article_data = extract_article_data(link)
+        article_data = extract_article_data(link, headers)
         if article_data is None:
             continue
 
@@ -73,7 +73,7 @@ def determine_section(link):
     return section
 
 
-def extract_article_data(link):
+def extract_article_data(link, headers):
     """Extracts relevant data (title, perex, date, section) from an idnes.cz article.
 
     Args:
@@ -84,7 +84,7 @@ def extract_article_data(link):
               Returns None if the article is premium or data extraction fails.
     """
 
-    response = requests.get(link)
+    response = requests.get(link, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
 
     if soup.find('p', class_="fsm"):  # Premium article

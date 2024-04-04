@@ -8,9 +8,9 @@ HEADERS = {
 sections_idnes = ['/zpravy/domaci', '/zpravy/zahranicni', '/ekonomika']
 sections_forum24 = ['/domaci', '/zahranici']
 
-process_novinky_data()
+process_novinky_data(headers=HEADERS)
 print('Novinky update completed')
-process_forum24(sections_forum24)
+process_forum24(sections_forum24, headers=HEADERS)
 print('Forum24 update completed')
-process_idnes(sections_idnes)
+process_idnes(sections_idnes, headers=HEADERS)
 print('Idnes update completed')

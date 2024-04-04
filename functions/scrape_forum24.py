@@ -17,7 +17,7 @@ def transform_date(date_str):
         print("Invalid date format. Please use dd. mm. YYYY")
 
 
-def process_forum24(sections):
+def process_forum24(sections, headers):
     """Scrapes a sections of Forum24 for articles, processes them, and adds new entries to the database.
     Args:
         sections(list): List of sections that should be processed
@@ -28,7 +28,7 @@ def process_forum24(sections):
     for section_main in sections:
         for page_num in range(1, 4):
             url = f'https://www.forum24.cz/rubrika{section_main}?stranka={page_num}'
-            response = requests.get(url)
+            response = requests.get(url, headers=headers)
             soup = BeautifulSoup(response.content, "html.parser")
 
             articles = soup.findAll('article', class_="block py-6 group")
