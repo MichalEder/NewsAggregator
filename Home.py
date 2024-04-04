@@ -1,9 +1,6 @@
 import streamlit as st
 from functions.database_interactions import read_resource_for_web
-from pages.Idnes import display_article as da_idnes
-from pages.Forum24 import display_article as da_forum24
-from pages.Novinky import display_article as da_novinky
-
+from functions.display_functions import display_article_novinky as da_novinky, display_article_idnes as da_idnes, display_article_forum24 as da_forum24
 
 st.set_page_config(layout="wide")
 
