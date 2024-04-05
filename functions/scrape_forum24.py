@@ -56,7 +56,7 @@ def process_forum24(sections, headers):
                         'Url': article_link,
                         'Date': date
                     }
-                    print(data)
+
                     original_data.add(data['Url'])
                     add_entry(data, 'forum24')
 
