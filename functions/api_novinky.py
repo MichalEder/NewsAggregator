@@ -13,26 +13,29 @@ def process_novinky_data(headers):
     try:
         for timeline in content['_items']:
             for document in timeline['documents']['_items']:
-                title = document['title']
-                perex = document['perex']
-                uid = document['uid']
-                slug = document['slug']
-                section = slug.split('-')[0]
-                date = document['dateOfPublication']
-                url = f'https://www.novinky.cz/clanek/{slug}-{uid}'
+                try:
+                    title = document['title']
+                    perex = document['perex']
+                    uid = document['uid']
+                    slug = document['slug']
+                    section = slug.split('-')[0]
+                    date = document['dateOfPublication']
+                    url = f'https://www.novinky.cz/clanek/{slug}-{uid}'
 
-                data_local = {
-                    'Title': title,
-                    'Section': section,
-                    'Perex': perex,
-                    'url': url,
-                    'Date': date
-                }
+                    data_local = {
+                        'Title': title,
+                        'Section': section,
+                        'Perex': perex,
+                        'url': url,
+                        'Date': date
+                    }
 
-                if (data_local['Title'] not in original_data and
-                        data_local['Section'] in ['zahranicni', 'domaci', 'krimi', 'ekonomika']):
-                    original_data.add(data_local['Title'])
-                    add_entry(data_local, 'novinky')
+                    if (data_local['Title'] not in original_data and
+                            data_local['Section'] in ['zahranicni', 'domaci', 'krimi', 'ekonomika']):
+                        original_data.add(data_local['Title'])
+                        add_entry(data_local, 'novinky')
+                except KeyError:
+                    continue
 
     except IndexError:
         pass
